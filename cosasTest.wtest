@@ -3,7 +3,20 @@ import cosas.*
 describe "group of test for cosas" {
 
   test "first test" {
-    assert.that(true)
+   residuos.nuevoPeso(30)
+   embalaje.envolver(residuos)
+
+  assert.equals(30, embalaje.peso())
+
+  }
+
+  test "second test" {
+   contenedor.agregar(ladrillos)
+   contenedor.agregar(arena)
+
+
+  
+
   }
 
 }
