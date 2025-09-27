@@ -1,9 +1,25 @@
 import camion.*
+import cosas.*
 
-describe "group of test for camion" {
+describe "Camion" {
 
-  test "first test" {
-    assert.that(true)
+  method initialize() {
+    bumblebee.tranformarEnAuto()
+    camion.cargar(bumblebee)
+    arena.peso(150)
+    camion.cargar(arena)
+  }
+
+  test "Tiene un peso total de 1950 kg." {
+    assert.equals(1950, camion.peso())
+  }
+
+  test "Hay uno que tiene 150 kg" {
+    assert.that(camion.algunaCosaPesa(150))
+  }
+
+  test "No excede el peso máximo ya que es 1950" {
+    assert.notThat(camion.estaExcedidoDePeso())
   }
 
 }

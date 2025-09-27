@@ -3,9 +3,10 @@ object camion {
     var property carga=[]
    
      
-    method cargar(unaCosa) {carga.add(unaCosa)}
+    method cargar(unaCosa) {unaCosa.add(carga)
+    }
     method descargar(unaCosa) {
-      carga.remove(unaCosa)
+      unaCosa.remove(carga)
     } 
     method peso() {return 1000 + carga.sum({c=>c.peso()})}
     method pesoParCarga() { return carga.all({c=>c.esPesoPar()})}//carga.all({c=>c.peso().even()})
@@ -30,20 +31,21 @@ object camion {
 
     method cosasNivelPeligrosidad(unaCosa) {return carga.filter({c=>c.nivelPeligrosidad() > unaCosa.nivelPeligrosidad()})
     }
-    method estaExcedidoDePeso() =
-       self.peso() > 2500
-    
+    method estaExcedidoDePeso() {
+     return  self.peso() > 2500
+    }
 
     method puedeCircularEnRuta(nivelPeligrosidad) {
       return !self.estaExcedidoDePeso() && self.todasCosasNivelPeligrosidad(nivelPeligrosidad).isEmpty() 
     }
 
-    method cosaPesadaEntreMaxMin(primerValor,segundoValor) {return
+    method cosaPesadaEntreMaxMin(primerValor,segundoValor) {
       carga.any({unaCosa=>unaCosa.peso().between(primerValor, segundoValor)})
     }
 
-    method cosaMasPesada() {return
+    method cosaMasPesada() {
       carga.max({unaCosa=>unaCosa.peso()})
     }
-    
+
+
 }

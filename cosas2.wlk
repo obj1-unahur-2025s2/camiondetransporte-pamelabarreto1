@@ -5,6 +5,10 @@ object knightRider {
   method nivelPeligrosidad() =10
   
   method esPesoPar() =self.peso().even()
+
+  method bulto()= 1
+
+  method consecuenciaDeLaCarga() {} 
   
 }
 
@@ -23,7 +27,11 @@ object bumblebee {
   method transformarEnRobot() {esAuto=false}
 
   method esPesoPar() =self.peso().even()  
-}
+
+ method bulto()= 2
+
+  method consecuenciaDeLaCarga() {self.transformarEnRobot()} 
+  }
 
 object ladrillos {
   var cantidad=10
@@ -35,7 +43,17 @@ object ladrillos {
   method nivelPeligrosidad() = 2 
   
   method esPesoPar() = self.peso().even()  
-}
+
+
+ method bulto(){if(cantidad<=100){1}
+                else if(cantidad.between(101, 300)){2}
+                else {3}}
+ 
+
+ 
+  method consecuenciaDeLaCarga() {cantidad=cantidad+12} 
+  
+ }
 
 
 object arena {
@@ -45,6 +63,11 @@ object arena {
 
   method esPesoPar() =self.peso().even()
 
+   method bulto()= 1
+
+
+  method consecuenciaDeLaCarga() {peso=peso-10.max(0)} 
+  
 }
 
 object bateraAntiaerea {
@@ -68,6 +91,13 @@ object bateraAntiaerea {
 
   method esPesoPar()= self.peso().even()
   
+  method bulto() {if(estaConMisiles){2}else{1}
+    
+  }
+
+  
+  method consecuenciaDeLaCarga() {self.cargarMisiles()} 
+  
 
 }
 
@@ -77,44 +107,60 @@ object contenedor {
    method agregar(unaCosa) {
      cosasAdentro.add(unaCosa)
    }
-
    method agregarVariasCosas(variasCosas) {
      cosasAdentro.addAll(variasCosas)
    }
-
    method sacar(unaCosa) {
      cosasAdentro.remove(unaCosa)
    }
-
   method peso()= 100 + cosasAdentro.sum({cosas=>cosas.peso()})
     
 
   method nivelPeligrosidad() {if(cosasAdentro.isEmpty()){0} 
-  else
-      {cosasAdentro.max({cosas=>cosas.nivelPeligrosidad()}).nivelPeligrosidad()}
+ else{ cosasAdentro.max({cosas=>cosas.nivelPeligrosidad()}).nivelPeligrosidad() 
 }
-  
+}
+
   method esPesoPar()=self.peso().even()
    
+
+   method bulto() = 1 + cosasAdentro.sum({cosas=>cosas.bulto()})
+
+   
+  method consecuenciaDeLaCarga() {cosasAdentro.forEach({cosas=>cosas.consecuenciaDeLaCarga()})} 
+  
 }
 
 object residuos {
   var  property  peso=10
-  
   method nivelPeligrosidad() =200 
-    
+
   method esPesoPar()=self.peso().even()
+
+   method bulto()= 1
+
+   
+  method consecuenciaDeLaCarga() {peso=peso+15} 
+  
 }
 
 
-object embalaje {
-  var cosaEnvuelta = bumblebee
-  
-  method envolver(unaCosa) {cosaEnvuelta=unaCosa}
 
+object embalaje {
+  var cosaEnvuelta = arena
+  method envolver(unaCosa) {
+    cosaEnvuelta=unaCosa
+  }
   method peso()= cosaEnvuelta.peso()
 
   method nivelPeligrosidad() {return cosaEnvuelta.nivelPeligrosidad()/2} 
 
   method esPesoPar()=self.peso().even()
+
+ method bulto()= 2
+
+
+  method consecuenciaDeLaCarga() {} 
+  
 }
+
